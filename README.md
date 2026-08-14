@@ -1,3 +1,5 @@
 # PARK JAEYOUNG
 
-Personal design, research, and practice archive.
+Personal archive for design, development, research, education, review and writing.
+
+Live: https://jyhome1228-cyber.github.io/parkjaeyoung/
