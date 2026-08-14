@@ -1,4 +1,9 @@
 (() => {
+  const refineStyle = document.createElement('link');
+  refineStyle.rel = 'stylesheet';
+  refineStyle.href = 'assets/css/refine-20260814.css?v=20260814-1';
+  document.head.appendChild(refineStyle);
+
   const year = document.querySelector('[data-year]');
   if (year) year.textContent = new Date().getFullYear();
 
