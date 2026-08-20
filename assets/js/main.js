@@ -76,17 +76,35 @@
 
   const renderResumeMedia = () => {
     if (path !== 'resume.html' || document.querySelector('.resume-media-hero')) return;
-    ensureStylesheet('assets/css/resume-media.css?v=20260821-1');
+    ensureStylesheet('assets/css/resume-media.css?v=20260821-2');
 
     const main = document.querySelector('.resume-page main');
-    const sections = main ? Array.from(main.querySelectorAll('.resume-section')) : [];
-    if (!main || !sections.length) return;
+    if (!main) return;
+
+    const summarySection = Array.from(main.querySelectorAll('.resume-section')).find((section) => section.querySelector('.evidence-strip'));
+    summarySection?.remove();
+
+    const sections = Array.from(main.querySelectorAll('.resume-section'));
+    if (!sections.length) return;
 
     const hero = document.createElement('section');
     hero.className = 'resume-media-hero';
     hero.innerHTML = `
-      <div class="shell">
-        <img class="resume-media-hero__image" src="https://cdn.imweb.me/upload/S2025061194bb8d274d3cd/3e7adf87e008e.png" alt="박재영 프로필 이미지" loading="eager">
+      <div class="shell resume-profile">
+        <div class="resume-profile__visual">
+          <img class="resume-media-hero__image" src="https://cdn.imweb.me/upload/S2025061194bb8d274d3cd/3e7adf87e008e.png" alt="박재영 프로필 이미지" loading="eager">
+        </div>
+        <div class="resume-profile__copy">
+          <p class="eyebrow">PROFILE</p>
+          <h1>박재영</h1>
+          <p class="resume-profile__role">디자이너 · 개발자 · 연구자 · 교육자 · 작가</p>
+          <p class="resume-profile__intro">브랜드와 기업의 현재와 목표를 함께 살피고, 기획·디자인·개발을 연결해 필요한 결과를 만듭니다. 실무에서 얻은 질문은 연구와 교육, 글쓰기로 확장하고 있습니다.</p>
+          <dl class="resume-profile__meta">
+            <div><dt>현재</dt><dd>나인웍스 대표</dd></div>
+            <div><dt>연구</dt><dd>서울과학기술대학교 IT디자인융합전공 박사과정</dd></div>
+            <div><dt>분야</dt><dd>브랜딩 · 디자인 · 웹 · 연구 · 교육</dd></div>
+          </dl>
+        </div>
       </div>
     `;
     main.insertBefore(hero, sections[0]);
@@ -103,8 +121,7 @@
         </div>
       </div>
     `;
-    const careerSection = sections[1] || sections[0];
-    careerSection.insertAdjacentElement('afterend', gallery);
+    sections[0].insertAdjacentElement('afterend', gallery);
   };
   renderResumeMedia();
 
