@@ -2,14 +2,19 @@
   const INJU_SYMBOL_URL = 'https://cdn.imweb.me/upload/S2025061194bb8d274d3cd/496a9732268cb.png';
 
   const ensureStylesheet = (href) => {
-    if (document.querySelector(`link[href*="${href.split('?')[0]}"]`)) return;
+    const base = href.split('?')[0];
+    const existing = document.querySelector(`link[href*="${base}"]`);
+    if (existing) {
+      existing.href = href;
+      return;
+    }
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = href;
     document.head.appendChild(link);
   };
   ensureStylesheet('assets/css/korean-first.css?v=20260820-2');
-  ensureStylesheet('assets/css/global-ui.css?v=20260820-1');
+  ensureStylesheet('assets/css/global-ui.css?v=20260821-1');
 
   const applyBrandSymbol = () => {
     document.querySelectorAll('link[rel~="icon"], link[rel="apple-touch-icon"]').forEach((link) => link.remove());
