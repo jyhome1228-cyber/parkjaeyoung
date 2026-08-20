@@ -1,21 +1,29 @@
 (() => {
   const INJU_SYMBOL_URL = 'https://cdn.imweb.me/upload/S2025061194bb8d274d3cd/496a9732268cb.png';
 
-  if (!document.querySelector('link[href*="korean-first.css"]')) {
-    const style = document.createElement('link');
-    style.rel = 'stylesheet';
-    style.href = 'assets/css/korean-first.css?v=20260820-2';
-    document.head.appendChild(style);
-  }
+  const ensureStylesheet = (href) => {
+    if (document.querySelector(`link[href*="${href.split('?')[0]}"]`)) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = href;
+    document.head.appendChild(link);
+  };
+  ensureStylesheet('assets/css/korean-first.css?v=20260820-2');
+  ensureStylesheet('assets/css/global-ui.css?v=20260820-1');
 
   const applyBrandSymbol = () => {
     document.querySelectorAll('link[rel~="icon"], link[rel="apple-touch-icon"]').forEach((link) => link.remove());
     const favicon = document.createElement('link');
-    favicon.rel = 'icon'; favicon.type = 'image/png'; favicon.href = INJU_SYMBOL_URL;
+    favicon.rel = 'icon';
+    favicon.type = 'image/png';
+    favicon.href = INJU_SYMBOL_URL;
     document.head.appendChild(favicon);
+
     const apple = document.createElement('link');
-    apple.rel = 'apple-touch-icon'; apple.href = INJU_SYMBOL_URL;
+    apple.rel = 'apple-touch-icon';
+    apple.href = INJU_SYMBOL_URL;
     document.head.appendChild(apple);
+
     document.querySelectorAll('.site-logo').forEach((logo) => {
       if (logo.querySelector('.site-logo__mark')) return;
       const mark = document.createElement('img');
@@ -38,7 +46,6 @@
   updateHeader();
   window.addEventListener('scroll', updateHeader, { passive: true });
 
-  const nav = document.querySelector('.site-nav');
   const items = [
     ['career.html', '걸어온 길'],
     ['resume.html', '이력'],
@@ -48,41 +55,80 @@
     ['projects.html', '포트폴리오'],
     ['collaborate.html', '함께하는 방법']
   ];
+
+  const nav = document.querySelector('.site-nav');
   if (nav) {
     nav.innerHTML = items.map(([href, label]) => `<a data-nav href="${href}">${label}</a>`).join('');
     nav.setAttribute('aria-label', '박재영 개인사이트 메뉴');
   }
 
   const path = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('[data-nav]').forEach((link) => {
+
+  const buildMobileMenu = () => {
+    const headerInner = document.querySelector('.site-header__inner');
+    if (!headerInner || document.querySelector('.mobile-menu-toggle')) return;
+
+    const toggle = document.createElement('button');
+    toggle.className = 'mobile-menu-toggle';
+    toggle.type = 'button';
+    toggle.setAttribute('aria-label', '메뉴 열기');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.innerHTML = '<span></span><span></span>';
+    headerInner.appendChild(toggle);
+
+    const overlay = document.createElement('aside');
+    overlay.className = 'mobile-menu-overlay';
+    overlay.setAttribute('aria-hidden', 'true');
+    overlay.innerHTML = `
+      <div class="mobile-menu-overlay__head">
+        <a class="mobile-menu-overlay__brand" href="index.html">
+          <img src="${INJU_SYMBOL_URL}" alt="" aria-hidden="true">
+          <strong>朴宰瑩</strong>
+        </a>
+        <button class="mobile-menu-close" type="button" aria-label="메뉴 닫기"></button>
+      </div>
+      <nav class="mobile-menu-overlay__nav" aria-label="모바일 메뉴">
+        <a data-mobile-nav href="index.html">홈</a>
+        ${items.map(([href, label]) => `<a data-mobile-nav href="${href}">${label}</a>`).join('')}
+      </nav>
+      <div class="mobile-menu-overlay__foot"><span>PARK JAEYOUNG</span><span>Personal Archive</span></div>
+    `;
+    document.body.appendChild(overlay);
+
+    const close = overlay.querySelector('.mobile-menu-close');
+    const openMenu = () => {
+      document.body.classList.add('is-menu-open');
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', '메뉴 닫기');
+      overlay.setAttribute('aria-hidden', 'false');
+    };
+    const closeMenu = () => {
+      document.body.classList.remove('is-menu-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', '메뉴 열기');
+      overlay.setAttribute('aria-hidden', 'true');
+    };
+
+    toggle.addEventListener('click', () => {
+      document.body.classList.contains('is-menu-open') ? closeMenu() : openMenu();
+    });
+    close?.addEventListener('click', closeMenu);
+    overlay.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeMenu();
+    });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900) closeMenu();
+    });
+  };
+  buildMobileMenu();
+
+  document.querySelectorAll('[data-nav], [data-mobile-nav]').forEach((link) => {
     if (link.getAttribute('href') === path) {
       link.classList.add('is-current');
       link.setAttribute('aria-current', 'page');
     }
   });
-
-  const pageLabels = {
-    'career.html': '01 / 걸어온 길',
-    'resume.html': '02 / 이력',
-    'business.html': '03 / 사업체',
-    'capabilities.html': '04 / 잘하는 일',
-    'research.html': '05 / 연구',
-    'projects.html': '06 / 포트폴리오',
-    'collaborate.html': '07 / 함께하는 방법'
-  };
-  const heroTitles = {
-    'career.html': '걸어온 길',
-    'resume.html': '이력',
-    'business.html': '운영 중인 사업과 프로젝트',
-    'capabilities.html': '잘하는 일',
-    'research.html': '연구',
-    'projects.html': '포트폴리오',
-    'collaborate.html': '함께하는 방법'
-  };
-  const heroLabel = document.querySelector('.page-hero__label');
-  if (heroLabel && pageLabels[path]) heroLabel.textContent = pageLabels[path];
-  const heroTitle = document.querySelector('.page-hero h1');
-  if (heroTitle && heroTitles[path]) heroTitle.textContent = heroTitles[path];
 
   if (path === 'index.html') {
     document.querySelector('.home-hero__top > .eyebrow')?.remove();
@@ -103,6 +149,7 @@
     }
     return null;
   };
+
   const renderBilingual = (element) => {
     if (!element || element.dataset.koreanFirst === 'true' || element.querySelector('.record__en')) return;
     const split = splitBilingual(element.textContent || '');
@@ -145,6 +192,7 @@
     const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
     return new Response(stream).text();
   };
+
   const loadBrandLogo = async () => {
     if (!('DecompressionStream' in window)) return;
     try {
