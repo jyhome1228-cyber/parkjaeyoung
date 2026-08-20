@@ -1,6 +1,64 @@
 /* Resume media blocks */
 .resume-media-hero{
-  display:none !important;
+  display:block !important;
+  padding:clamp(72px,7vw,104px) 0 64px;
+  border-bottom:1px solid var(--line);
+}
+.resume-profile{
+  display:grid;
+  grid-template-columns:minmax(300px,420px) minmax(0,1fr);
+  gap:clamp(48px,7vw,110px);
+  align-items:end;
+}
+.resume-profile__visual{min-width:0}
+.resume-media-hero__image{
+  display:block;
+  width:100%;
+  height:auto;
+  object-fit:contain;
+}
+.resume-profile__copy{max-width:720px;padding-bottom:4px}
+.resume-profile__copy>.eyebrow{margin-bottom:18px}
+.resume-profile__copy h1{
+  font-size:clamp(34px,3.2vw,46px);
+  font-weight:510;
+  line-height:1.15;
+  letter-spacing:-.045em;
+}
+.resume-profile__role{
+  margin-top:12px;
+  font-size:16px;
+  line-height:1.6;
+  color:#4f4f4b;
+}
+.resume-profile__intro{
+  max-width:660px;
+  margin-top:28px;
+  font-size:17px;
+  line-height:1.8;
+  color:#5b5b56;
+}
+.resume-profile__meta{
+  margin-top:32px;
+  border-top:1px solid var(--line);
+}
+.resume-profile__meta>div{
+  display:grid;
+  grid-template-columns:72px minmax(0,1fr);
+  gap:18px;
+  padding:12px 0;
+  border-bottom:1px solid var(--line);
+}
+.resume-profile__meta dt{
+  font-size:12px;
+  color:var(--muted);
+  letter-spacing:.04em;
+}
+.resume-profile__meta dd{
+  margin:0;
+  font-size:14px;
+  line-height:1.6;
+  color:#373734;
 }
 .resume-activity{
   padding:48px 0 58px;
@@ -28,7 +86,16 @@
   object-fit:cover;
   filter:grayscale(100%);
 }
-@media(max-width:900px){
+@media(max-width:1000px){
+  .resume-profile{grid-template-columns:minmax(240px,340px) minmax(0,1fr);gap:42px}
+}
+@media(max-width:760px){
+  .resume-media-hero{padding:56px 0 48px}
+  .resume-profile{grid-template-columns:1fr;gap:28px;align-items:start}
+  .resume-profile__visual{max-width:360px}
+  .resume-profile__copy h1{font-size:34px}
+  .resume-profile__intro{margin-top:20px;font-size:16px;line-height:1.76}
+  .resume-profile__meta{margin-top:24px}
   .resume-activity{padding:40px 0 48px}
   .resume-activity .shell{width:min(calc(100% - 32px),1480px)}
   .resume-activity__grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
