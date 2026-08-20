@@ -1,4 +1,4 @@
-/* Global UI refinement — 2026-08-20 */
+/* Global UI refinement — 2026-08-21 */
 
 /* Inner pages start directly with their actual content. */
 .page-hero{
@@ -10,9 +10,70 @@ main > .page-hero + .resume-section{
   padding-top:clamp(76px,7vw,104px);
 }
 
+/* Desktop header: slightly larger and easier to scan. */
+@media(min-width:901px){
+  .site-logo{gap:11px}
+  .site-logo__mark{width:34px;height:34px}
+  .site-logo b{font-size:24px;font-weight:520}
+  .site-logo span{font-size:12px;letter-spacing:.105em}
+  .site-nav{font-size:15px;gap:27px;font-weight:510}
+  .site-action{font-size:14px;font-weight:520}
+}
+
+/* Main capability map: simple 3 x 2 rectangular grid. */
+.area-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  border-top:1px solid var(--ink);
+  border-left:1px solid var(--line);
+}
+.area-card{
+  min-height:180px;
+  padding:28px 26px;
+  border-right:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  background:#fff;
+}
+.area-card__no{
+  font-size:12px;
+  color:var(--muted);
+  letter-spacing:.08em;
+}
+.area-card h3{
+  margin-top:auto;
+  font-size:clamp(21px,1.5vw,26px);
+  font-weight:530;
+  line-height:1.3;
+  letter-spacing:-.03em;
+}
+.area-card p{
+  margin-top:7px;
+  font-size:12px;
+  color:#8b8b87;
+  letter-spacing:.04em;
+}
+
+/* Collaboration closing copy: cleaner natural wrapping. */
+.collaborate-page .career-closing__inner{max-width:1100px}
+.collaborate-page .career-closing__inner h2{
+  max-width:1030px;
+  font-size:clamp(28px,2.4vw,38px);
+  line-height:1.36;
+  letter-spacing:-.04em;
+}
+.collaborate-page .career-closing__copy{max-width:920px;margin-top:32px}
+.collaborate-page .career-closing__copy p{font-size:17px;line-height:1.8}
+
 .mobile-menu-toggle,
 .mobile-menu-overlay{
   display:none;
+}
+
+@media(max-width:1100px){
+  .area-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
 @media(max-width:900px){
@@ -188,7 +249,6 @@ main > .page-hero + .resume-section{
     color:var(--muted);
   }
 
-  /* Inner page spacing after removing hero. */
   main > .page-hero + .section,
   main > .page-hero + .resume-section{
     padding-top:64px;
@@ -220,31 +280,13 @@ main > .page-hero + .resume-section{
     font-size:15px;
     line-height:1.72;
   }
+  .area-card{min-height:150px;padding:22px 20px}
+  .collaborate-page .career-closing__inner h2{font-size:clamp(27px,7vw,34px)}
+}
 
-  /* Hexagon section: prevent oversized blocks and horizontal collisions. */
-  .hex-section{
-    gap:38px !important;
-  }
-  .hex-map{
-    width:100% !important;
-    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
-    gap:8px !important;
-  }
-  .hex-map__core{
-    width:min(54vw,190px) !important;
-    min-height:170px !important;
-  }
-  .hex-map__item{
-    min-width:0;
-    min-height:138px !important;
-    padding:14px !important;
-  }
-  .hex-map__core strong{
-    font-size:19px;
-  }
-  .hex-map__item strong{
-    font-size:17px;
-  }
+@media(max-width:620px){
+  .area-grid{grid-template-columns:1fr}
+  .area-card{min-height:124px}
 }
 
 @media(max-width:420px){
@@ -259,11 +301,5 @@ main > .page-hero + .resume-section{
   .mobile-menu-overlay__nav a{
     min-height:54px;
     font-size:22px;
-  }
-  .hex-map__core{
-    width:min(56vw,180px) !important;
-  }
-  .hex-map__item{
-    min-height:128px !important;
   }
 }
