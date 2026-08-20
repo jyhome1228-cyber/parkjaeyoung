@@ -42,14 +42,13 @@
   const nav = document.querySelector('.site-nav');
   if (nav) {
     const items = [
-      ['goal.html', '목표'],
-      ['capabilities.html', '잘하는 일'],
       ['career.html', '걸어온 길'],
-      ['business.html', '사업체'],
-      ['research.html', '연구'],
       ['resume.html', '이력'],
-      ['projects.html', '프로젝트'],
-      ['notes.html', '기록']
+      ['business.html', '사업체'],
+      ['capabilities.html', '잘하는 일'],
+      ['research.html', '연구'],
+      ['projects.html', '포트폴리오'],
+      ['collaborate.html', '함께하는 방법']
     ];
     nav.innerHTML = items.map(([href, label]) => `<a data-nav href="${href}">${label}</a>`).join('');
     nav.setAttribute('aria-label', '박재영 개인사이트 메뉴');
@@ -64,14 +63,13 @@
   });
 
   const pageLabels = {
-    'goal.html': '01 / GOAL',
-    'capabilities.html': '02 / CAPABILITIES',
-    'career.html': '03 / CAREER',
-    'business.html': '04 / BUSINESS',
+    'career.html': '01 / CAREER',
+    'resume.html': '02 / RESUME',
+    'business.html': '03 / BUSINESS',
+    'capabilities.html': '04 / CAPABILITIES',
     'research.html': '05 / RESEARCH',
-    'resume.html': '06 / RESUME',
-    'projects.html': '07 / PROJECTS',
-    'notes.html': '08 / NOTES'
+    'projects.html': '06 / PORTFOLIO',
+    'collaborate.html': '07 / COLLABORATION'
   };
   const heroLabel = document.querySelector('.page-hero__label');
   if (heroLabel && pageLabels[path]) heroLabel.textContent = pageLabels[path];
