@@ -74,6 +74,40 @@
 
   const path = window.location.pathname.split('/').pop() || 'index.html';
 
+  const renderResumeMedia = () => {
+    if (path !== 'resume.html' || document.querySelector('.resume-media-hero')) return;
+    ensureStylesheet('assets/css/resume-media.css?v=20260821-1');
+
+    const main = document.querySelector('.resume-page main');
+    const sections = main ? Array.from(main.querySelectorAll('.resume-section')) : [];
+    if (!main || !sections.length) return;
+
+    const hero = document.createElement('section');
+    hero.className = 'resume-media-hero';
+    hero.innerHTML = `
+      <div class="shell">
+        <img class="resume-media-hero__image" src="https://cdn.imweb.me/upload/S2025061194bb8d274d3cd/3e7adf87e008e.png" alt="박재영 프로필 이미지" loading="eager">
+      </div>
+    `;
+    main.insertBefore(hero, sections[0]);
+
+    const gallery = document.createElement('section');
+    gallery.className = 'resume-activity';
+    gallery.innerHTML = `
+      <div class="shell">
+        <div class="resume-activity__grid" aria-label="박재영 활동 기록">
+          <figure class="resume-activity__item"><img src="https://cdn.imweb.me/upload/S2025061194bb8d274d3cd/97d74de55ef8d.jpeg" alt="박재영 활동 사진 1" loading="lazy"></figure>
+          <figure class="resume-activity__item"><img src="https://cdn.imweb.me/upload/S2025061194bb8d274d3cd/ea1f26c2b22a6.jpeg" alt="박재영 활동 사진 2" loading="lazy"></figure>
+          <figure class="resume-activity__item"><img src="https://cdn.imweb.me/upload/S2025061194bb8d274d3cd/9d7c684a7e470.jpeg" alt="박재영 활동 사진 3" loading="lazy"></figure>
+          <figure class="resume-activity__item"><img src="https://cdn.imweb.me/upload/S2025061194bb8d274d3cd/6741466cc989b.jpeg" alt="박재영 활동 사진 4" loading="lazy"></figure>
+        </div>
+      </div>
+    `;
+    const careerSection = sections[1] || sections[0];
+    careerSection.insertAdjacentElement('afterend', gallery);
+  };
+  renderResumeMedia();
+
   const buildMobileMenu = () => {
     const headerInner = document.querySelector('.site-header__inner');
     if (!headerInner || document.querySelector('.mobile-menu-toggle')) return;
