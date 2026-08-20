@@ -31,6 +31,19 @@
     }
   });
 
+  const pageLabels = {
+    'goal.html': '01 / GOAL',
+    'capabilities.html': '02 / CAPABILITIES',
+    'career.html': '03 / CAREER',
+    'business.html': '04 / BUSINESS',
+    'research.html': '05 / RESEARCH',
+    'resume.html': '06 / RESUME',
+    'projects.html': '07 / PROJECTS',
+    'notes.html': '08 / NOTES'
+  };
+  const heroLabel = document.querySelector('.page-hero__label');
+  if (heroLabel && pageLabels[path]) heroLabel.textContent = pageLabels[path];
+
   const decodeGzipBase64 = async (path) => {
     const base64 = (await (await fetch(path)).text()).trim();
     const bytes = Uint8Array.from(atob(base64), char => char.charCodeAt(0));
