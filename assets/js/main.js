@@ -5,25 +5,22 @@
   if (!document.querySelector('link[href*="korean-first.css"]')) {
     const koreanFirstStyle = document.createElement('link');
     koreanFirstStyle.rel = 'stylesheet';
-    koreanFirstStyle.href = 'assets/css/korean-first.css?v=20260820-1';
+    koreanFirstStyle.href = 'assets/css/korean-first.css?v=20260820-2';
     document.head.appendChild(koreanFirstStyle);
   }
 
   /* Shared inju symbol: favicon + header brand mark */
   const applyBrandSymbol = () => {
     document.querySelectorAll('link[rel~="icon"], link[rel="apple-touch-icon"]').forEach((link) => link.remove());
-
     const favicon = document.createElement('link');
     favicon.rel = 'icon';
     favicon.type = 'image/png';
     favicon.href = INJU_SYMBOL_URL;
     document.head.appendChild(favicon);
-
     const appleTouchIcon = document.createElement('link');
     appleTouchIcon.rel = 'apple-touch-icon';
     appleTouchIcon.href = INJU_SYMBOL_URL;
     document.head.appendChild(appleTouchIcon);
-
     document.querySelectorAll('.site-logo').forEach((logo) => {
       if (logo.querySelector('.site-logo__mark')) return;
       const mark = document.createElement('img');
@@ -36,7 +33,6 @@
       logo.prepend(mark);
     });
   };
-
   applyBrandSymbol();
 
   const year = document.querySelector('[data-year]');
@@ -83,49 +79,34 @@
   if (heroLabel && pageLabels[path]) heroLabel.textContent = pageLabels[path];
 
   const hasHangul = (value = '') => /[가-힣]/.test(value);
-
   const splitBilingual = (value = '') => {
     const text = value.replace(/\s+/g, ' ').trim();
     if (!text.includes(' / ')) return null;
-
     const parts = text.split(' / ').map((part) => part.trim()).filter(Boolean);
     if (parts.length < 2) return null;
-
     const firstKoIndex = parts.findIndex(hasHangul);
-    if (firstKoIndex > 0) {
-      return {
-        ko: parts.slice(firstKoIndex).join(' / '),
-        en: parts.slice(0, firstKoIndex).join(' / ')
-      };
-    }
-
+    if (firstKoIndex > 0) return { ko: parts.slice(firstKoIndex).join(' / '), en: parts.slice(0, firstKoIndex).join(' / ') };
     if (firstKoIndex === 0) {
       const firstEnIndex = parts.findIndex((part, index) => index > 0 && !hasHangul(part));
-      if (firstEnIndex > 0) {
-        return {
-          ko: parts.slice(0, firstEnIndex).join(' / '),
-          en: parts.slice(firstEnIndex).join(' / ')
-        };
-      }
+      if (firstEnIndex > 0) return { ko: parts.slice(0, firstEnIndex).join(' / '), en: parts.slice(firstEnIndex).join(' / ') };
     }
-
     return null;
   };
 
   const renderBilingual = (element) => {
-    if (!element || element.dataset.koreanFirst === 'true') return;
+    if (!element || element.dataset.koreanFirst === 'true' || element.querySelector('.record__en')) return;
     const split = splitBilingual(element.textContent || '');
     if (!split) return;
     element.innerHTML = `<span class="ko-primary">${split.ko}</span><span class="en-secondary">${split.en}</span>`;
     element.dataset.koreanFirst = 'true';
   };
 
-  /* Korean school name for undergraduate education */
+  /* Legacy undergraduate rows only. New pages already contain the Korean university name. */
   document.querySelectorAll('.record').forEach((record) => {
     const yearText = record.querySelector('.record__year')?.textContent.trim() || '';
     const title = record.querySelector('.record__title');
     const titleText = title?.textContent.trim() || '';
-    if (yearText === 'B.A.' || titleText.includes('학부전공') || titleText.includes('Undergraduate Majors')) {
+    if ((yearText === 'B.A.' || titleText.includes('학부전공') || titleText.includes('Undergraduate Majors')) && !titleText.includes('한국교통대학교')) {
       if (title) {
         title.innerHTML = '<span class="ko-primary">한국교통대학교</span><span class="en-secondary">Korea National University of Transportation</span>';
         title.dataset.koreanFirst = 'true';
@@ -133,7 +114,7 @@
     }
   });
 
-  /* Resume section hierarchy: Korean title first, English as a small gray subtitle. */
+  /* Only transform older bilingual resume section labels. Korean-first sections are left untouched. */
   const resumeSectionTitles = {
     'PROFESSIONAL EXPERIENCE': '주요 경력',
     'CAPABILITIES': '보유 역량',
@@ -147,28 +128,27 @@
     'WRITING & ESSAY': '글쓰기·에세이',
     'PERSPECTIVE': '관점'
   };
-
   document.querySelectorAll('.resume-section__head').forEach((head) => {
     const eyebrow = head.querySelector('.eyebrow');
     const heading = head.querySelector('h2');
     if (!eyebrow || !heading || head.dataset.koreanFirst === 'true') return;
-
     const eyebrowText = eyebrow.textContent.replace(/\s+/g, ' ').trim();
+    if (hasHangul(eyebrowText) && !eyebrowText.includes(' / ')) {
+      head.dataset.koreanFirst = 'true';
+      return;
+    }
     const englishLabel = eyebrowText.split(' / ')[0].trim();
     const koreanLabel = eyebrowText.includes(' / ') ? eyebrowText.split(' / ').slice(1).join(' / ').trim() : '';
     const englishHeading = heading.textContent.trim();
     const koreanHeading = resumeSectionTitles[englishLabel.toUpperCase()] || koreanLabel || englishHeading;
-
     eyebrow.innerHTML = `<span class="ko-label">${koreanLabel || koreanHeading}</span><span class="en-label">${englishLabel}</span>`;
     heading.innerHTML = `<span class="ko-primary">${koreanHeading}</span><span class="en-secondary">${englishHeading}</span>`;
     head.dataset.koreanFirst = 'true';
   });
 
-  /* Record titles and role names throughout career/resume pages. */
   document.querySelectorAll('.record__title').forEach(renderBilingual);
   document.querySelectorAll('.record__copy b').forEach(renderBilingual);
 
-  /* Capabilities: Korean role name becomes H3, English becomes secondary H4. */
   document.querySelectorAll('.cap-card').forEach((card) => {
     const main = card.querySelector('h3');
     const sub = card.querySelector('h4');
@@ -182,7 +162,6 @@
     }
   });
 
-  /* Research/archive titles: Korean title first, English subtitle below. */
   document.querySelectorAll('.archive-item').forEach((item) => {
     const main = item.querySelector('h2, h3');
     const sub = item.querySelector('h4');
@@ -196,12 +175,10 @@
     }
   });
 
-  /* Ordinary section headings: Korean heading remains primary; English label moves below it. */
   document.querySelectorAll('.section-heading').forEach((section) => {
     const eyebrow = section.querySelector('.eyebrow');
     const heading = section.querySelector('h2');
     if (!eyebrow || !heading || section.dataset.koreanFirst === 'true') return;
-
     const eyebrowText = eyebrow.textContent.replace(/\s+/g, ' ').trim();
     if (hasHangul(heading.textContent) && eyebrowText && !hasHangul(eyebrowText)) {
       const english = document.createElement('span');
@@ -219,7 +196,6 @@
     const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
     return new Response(stream).text();
   };
-
   const loadBrandLogo = async () => {
     if (!('DecompressionStream' in window)) return;
     try {
@@ -234,6 +210,5 @@
       console.warn('Brand logo fallback is being used.', error);
     }
   };
-
   loadBrandLogo();
 })();
