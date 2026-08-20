@@ -1,26 +1,21 @@
 (() => {
   const INJU_SYMBOL_URL = 'https://cdn.imweb.me/upload/S2025061194bb8d274d3cd/496a9732268cb.png';
 
-  /* Korean-first typography layer */
   if (!document.querySelector('link[href*="korean-first.css"]')) {
-    const koreanFirstStyle = document.createElement('link');
-    koreanFirstStyle.rel = 'stylesheet';
-    koreanFirstStyle.href = 'assets/css/korean-first.css?v=20260820-2';
-    document.head.appendChild(koreanFirstStyle);
+    const style = document.createElement('link');
+    style.rel = 'stylesheet';
+    style.href = 'assets/css/korean-first.css?v=20260820-2';
+    document.head.appendChild(style);
   }
 
-  /* Shared inju symbol: favicon + header brand mark */
   const applyBrandSymbol = () => {
     document.querySelectorAll('link[rel~="icon"], link[rel="apple-touch-icon"]').forEach((link) => link.remove());
     const favicon = document.createElement('link');
-    favicon.rel = 'icon';
-    favicon.type = 'image/png';
-    favicon.href = INJU_SYMBOL_URL;
+    favicon.rel = 'icon'; favicon.type = 'image/png'; favicon.href = INJU_SYMBOL_URL;
     document.head.appendChild(favicon);
-    const appleTouchIcon = document.createElement('link');
-    appleTouchIcon.rel = 'apple-touch-icon';
-    appleTouchIcon.href = INJU_SYMBOL_URL;
-    document.head.appendChild(appleTouchIcon);
+    const apple = document.createElement('link');
+    apple.rel = 'apple-touch-icon'; apple.href = INJU_SYMBOL_URL;
+    document.head.appendChild(apple);
     document.querySelectorAll('.site-logo').forEach((logo) => {
       if (logo.querySelector('.site-logo__mark')) return;
       const mark = document.createElement('img');
@@ -44,16 +39,16 @@
   window.addEventListener('scroll', updateHeader, { passive: true });
 
   const nav = document.querySelector('.site-nav');
+  const items = [
+    ['career.html', '걸어온 길'],
+    ['resume.html', '이력'],
+    ['business.html', '사업체'],
+    ['capabilities.html', '잘하는 일'],
+    ['research.html', '연구'],
+    ['projects.html', '포트폴리오'],
+    ['collaborate.html', '함께하는 방법']
+  ];
   if (nav) {
-    const items = [
-      ['career.html', '걸어온 길'],
-      ['resume.html', '이력'],
-      ['business.html', '사업체'],
-      ['capabilities.html', '잘하는 일'],
-      ['research.html', '연구'],
-      ['projects.html', '포트폴리오'],
-      ['collaborate.html', '함께하는 방법']
-    ];
     nav.innerHTML = items.map(([href, label]) => `<a data-nav href="${href}">${label}</a>`).join('');
     nav.setAttribute('aria-label', '박재영 개인사이트 메뉴');
   }
@@ -75,8 +70,24 @@
     'projects.html': '06 / 포트폴리오',
     'collaborate.html': '07 / 함께하는 방법'
   };
+  const heroTitles = {
+    'career.html': '걸어온 길',
+    'resume.html': '이력',
+    'business.html': '운영 중인 사업과 프로젝트',
+    'capabilities.html': '잘하는 일',
+    'research.html': '연구',
+    'projects.html': '포트폴리오',
+    'collaborate.html': '함께하는 방법'
+  };
   const heroLabel = document.querySelector('.page-hero__label');
   if (heroLabel && pageLabels[path]) heroLabel.textContent = pageLabels[path];
+  const heroTitle = document.querySelector('.page-hero h1');
+  if (heroTitle && heroTitles[path]) heroTitle.textContent = heroTitles[path];
+
+  if (path === 'index.html') {
+    document.querySelector('.home-hero__top > .eyebrow')?.remove();
+    document.querySelector('.footer__center')?.remove();
+  }
 
   const hasHangul = (value = '') => /[가-힣]/.test(value);
   const splitBilingual = (value = '') => {
@@ -92,7 +103,6 @@
     }
     return null;
   };
-
   const renderBilingual = (element) => {
     if (!element || element.dataset.koreanFirst === 'true' || element.querySelector('.record__en')) return;
     const split = splitBilingual(element.textContent || '');
@@ -101,7 +111,6 @@
     element.dataset.koreanFirst = 'true';
   };
 
-  /* Legacy undergraduate rows only. New pages already contain the Korean university name. */
   document.querySelectorAll('.record').forEach((record) => {
     const yearText = record.querySelector('.record__year')?.textContent.trim() || '';
     const title = record.querySelector('.record__title');
@@ -114,53 +123,8 @@
     }
   });
 
-  /* Only transform older bilingual resume section labels. Korean-first sections are left untouched. */
-  const resumeSectionTitles = {
-    'PROFESSIONAL EXPERIENCE': '주요 경력',
-    'CAPABILITIES': '보유 역량',
-    'EDUCATION & RESEARCH': '학력·연구',
-    'SELECTED DESIGN PROJECTS': '대표 디자인 프로젝트',
-    'JURY & REVIEW': '심사·평가',
-    'TEACHING & SEMINAR': '강의·강연',
-    'ACADEMIC & EXHIBITION': '학술·전시',
-    'AWARDS & RECOGNITION': '수상·선정',
-    'PUBLIC & STARTUP PROGRAMS': '지원사업·컨설팅',
-    'WRITING & ESSAY': '글쓰기·에세이',
-    'PERSPECTIVE': '관점'
-  };
-  document.querySelectorAll('.resume-section__head').forEach((head) => {
-    const eyebrow = head.querySelector('.eyebrow');
-    const heading = head.querySelector('h2');
-    if (!eyebrow || !heading || head.dataset.koreanFirst === 'true') return;
-    const eyebrowText = eyebrow.textContent.replace(/\s+/g, ' ').trim();
-    if (hasHangul(eyebrowText) && !eyebrowText.includes(' / ')) {
-      head.dataset.koreanFirst = 'true';
-      return;
-    }
-    const englishLabel = eyebrowText.split(' / ')[0].trim();
-    const koreanLabel = eyebrowText.includes(' / ') ? eyebrowText.split(' / ').slice(1).join(' / ').trim() : '';
-    const englishHeading = heading.textContent.trim();
-    const koreanHeading = resumeSectionTitles[englishLabel.toUpperCase()] || koreanLabel || englishHeading;
-    eyebrow.innerHTML = `<span class="ko-label">${koreanLabel || koreanHeading}</span><span class="en-label">${englishLabel}</span>`;
-    heading.innerHTML = `<span class="ko-primary">${koreanHeading}</span><span class="en-secondary">${englishHeading}</span>`;
-    head.dataset.koreanFirst = 'true';
-  });
-
   document.querySelectorAll('.record__title').forEach(renderBilingual);
   document.querySelectorAll('.record__copy b').forEach(renderBilingual);
-
-  document.querySelectorAll('.cap-card').forEach((card) => {
-    const main = card.querySelector('h3');
-    const sub = card.querySelector('h4');
-    if (!main || !sub || card.dataset.koreanFirst === 'true') return;
-    if (!hasHangul(main.textContent) && hasHangul(sub.textContent)) {
-      const english = main.textContent.trim();
-      const korean = sub.textContent.trim();
-      main.textContent = korean;
-      sub.textContent = english;
-      card.dataset.koreanFirst = 'true';
-    }
-  });
 
   document.querySelectorAll('.archive-item').forEach((item) => {
     const main = item.querySelector('h2, h3');
@@ -172,21 +136,6 @@
       main.textContent = korean;
       sub.textContent = english;
       item.dataset.koreanFirst = 'true';
-    }
-  });
-
-  document.querySelectorAll('.section-heading').forEach((section) => {
-    const eyebrow = section.querySelector('.eyebrow');
-    const heading = section.querySelector('h2');
-    if (!eyebrow || !heading || section.dataset.koreanFirst === 'true') return;
-    const eyebrowText = eyebrow.textContent.replace(/\s+/g, ' ').trim();
-    if (hasHangul(heading.textContent) && eyebrowText && !hasHangul(eyebrowText)) {
-      const english = document.createElement('span');
-      english.className = 'section-title-en';
-      english.textContent = eyebrowText;
-      heading.appendChild(english);
-      eyebrow.classList.add('is-korean-first-hidden');
-      section.dataset.koreanFirst = 'true';
     }
   });
 
