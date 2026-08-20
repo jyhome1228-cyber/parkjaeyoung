@@ -1,0 +1,113 @@
+/* Korean-first hierarchy — 2026-08-20 */
+
+/* Korean is the primary reading layer; English is secondary metadata. */
+.ko-primary,
+.ko-label{
+  display:block;
+  color:var(--ink);
+}
+
+.en-secondary,
+.en-label,
+.section-title-en{
+  display:block;
+  color:var(--muted);
+  font-weight:400;
+  letter-spacing:.01em;
+  text-transform:none;
+}
+
+.record__title .en-secondary{
+  margin-top:4px;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.record__copy b .en-secondary{
+  margin-top:3px;
+  font-size:13px;
+  line-height:1.55;
+  font-weight:400;
+  color:#858581;
+}
+
+.resume-section__head .eyebrow{
+  text-transform:none;
+  letter-spacing:0;
+}
+
+.resume-section__head .ko-label{
+  font-size:14px;
+  font-weight:600;
+  line-height:1.45;
+}
+
+.resume-section__head .en-label{
+  margin-top:5px;
+  font-size:11px;
+  font-weight:500;
+  line-height:1.45;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.resume-section__head h2 .en-secondary{
+  margin-top:9px;
+  font-size:14px;
+  line-height:1.55;
+  font-weight:400;
+  color:#858581;
+  letter-spacing:0;
+}
+
+.section-heading .eyebrow.is-korean-first-hidden{
+  display:none;
+}
+
+.section-heading h2 .section-title-en{
+  margin-top:9px;
+  font-size:13px;
+  line-height:1.55;
+  font-weight:400;
+  color:#8a8a86;
+  letter-spacing:.015em;
+}
+
+.cap-card h3{
+  color:var(--ink);
+}
+
+.cap-card h4{
+  color:#848480;
+  font-size:14px;
+  font-weight:400;
+  letter-spacing:.005em;
+}
+
+.archive-item h4{
+  color:#848480;
+  font-size:14px;
+  font-weight:400;
+  line-height:1.55;
+}
+
+/* Hero labels are Korean navigation labels, not English category names. */
+.page-hero__label{
+  text-transform:none;
+  letter-spacing:.04em;
+}
+
+@media(max-width:760px){
+  .record__title .en-secondary,
+  .record__copy b .en-secondary,
+  .resume-section__head h2 .en-secondary,
+  .section-heading h2 .section-title-en,
+  .archive-item h4,
+  .cap-card h4{
+    font-size:12px;
+  }
+
+  .resume-section__head .en-label{
+    font-size:10px;
+  }
+}
