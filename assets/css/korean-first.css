@@ -9,7 +9,8 @@
 
 .en-secondary,
 .en-label,
-.section-title-en{
+.section-title-en,
+.record__en{
   display:block;
   color:var(--muted);
   font-weight:400;
@@ -17,10 +18,13 @@
   text-transform:none;
 }
 
-.record__title .en-secondary{
+.record__title .en-secondary,
+.record__title .record__en{
   margin-top:4px;
-  font-size:13px;
-  line-height:1.5;
+  font-size:12px;
+  line-height:1.45;
+  font-weight:400;
+  color:#8a8a86;
 }
 
 .record__copy b .en-secondary{
@@ -99,6 +103,7 @@
 
 @media(max-width:760px){
   .record__title .en-secondary,
+  .record__title .record__en,
   .record__copy b .en-secondary,
   .resume-section__head h2 .en-secondary,
   .section-heading h2 .section-title-en,
