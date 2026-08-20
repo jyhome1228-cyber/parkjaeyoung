@@ -12,6 +12,7 @@
     const items = [
       ['goal.html', '목표'],
       ['capabilities.html', '잘하는 일'],
+      ['career.html', '걸어온 길'],
       ['business.html', '사업체'],
       ['research.html', '연구'],
       ['resume.html', '이력'],
