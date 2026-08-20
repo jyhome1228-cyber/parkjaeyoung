@@ -7,6 +7,21 @@
   updateHeader();
   window.addEventListener('scroll', updateHeader, { passive: true });
 
+  const nav = document.querySelector('.site-nav');
+  if (nav) {
+    const items = [
+      ['goal.html', '목표'],
+      ['capabilities.html', '잘하는 일'],
+      ['business.html', '사업체'],
+      ['research.html', '연구'],
+      ['resume.html', '이력'],
+      ['projects.html', '프로젝트'],
+      ['notes.html', '기록']
+    ];
+    nav.innerHTML = items.map(([href, label]) => `<a data-nav href="${href}">${label}</a>`).join('');
+    nav.setAttribute('aria-label', '박재영 개인사이트 메뉴');
+  }
+
   const path = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('[data-nav]').forEach((link) => {
     if (link.getAttribute('href') === path) {
