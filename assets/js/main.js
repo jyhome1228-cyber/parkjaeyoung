@@ -14,7 +14,7 @@
     document.head.appendChild(link);
   };
   ensureStylesheet('assets/css/korean-first.css?v=20260820-2');
-  ensureStylesheet('assets/css/global-ui.css?v=20260821-1');
+  ensureStylesheet('assets/css/global-ui.css?v=20260821-2');
 
   const applyBrandSymbol = () => {
     document.querySelectorAll('link[rel~="icon"], link[rel="apple-touch-icon"]').forEach((link) => link.remove());
@@ -50,6 +50,11 @@
   const updateHeader = () => header?.classList.toggle('is-scrolled', window.scrollY > 8);
   updateHeader();
   window.addEventListener('scroll', updateHeader, { passive: true });
+
+  document.querySelectorAll('.site-action').forEach((action) => {
+    const href = action.getAttribute('href') || '';
+    if (href.includes('collaborate.html')) action.remove();
+  });
 
   const items = [
     ['career.html', '걸어온 길'],
