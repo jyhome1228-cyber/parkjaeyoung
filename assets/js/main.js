@@ -1,4 +1,36 @@
 (() => {
+  const INJU_SYMBOL_URL = 'https://cdn.imweb.me/upload/S2025061194bb8d274d3cd/496a9732268cb.png';
+
+  /* Shared inju symbol: favicon + header brand mark */
+  const applyBrandSymbol = () => {
+    document.querySelectorAll('link[rel~="icon"], link[rel="apple-touch-icon"]').forEach((link) => link.remove());
+
+    const favicon = document.createElement('link');
+    favicon.rel = 'icon';
+    favicon.type = 'image/png';
+    favicon.href = INJU_SYMBOL_URL;
+    document.head.appendChild(favicon);
+
+    const appleTouchIcon = document.createElement('link');
+    appleTouchIcon.rel = 'apple-touch-icon';
+    appleTouchIcon.href = INJU_SYMBOL_URL;
+    document.head.appendChild(appleTouchIcon);
+
+    document.querySelectorAll('.site-logo').forEach((logo) => {
+      if (logo.querySelector('.site-logo__mark')) return;
+      const mark = document.createElement('img');
+      mark.className = 'site-logo__mark';
+      mark.src = INJU_SYMBOL_URL;
+      mark.alt = '';
+      mark.setAttribute('aria-hidden', 'true');
+      mark.decoding = 'async';
+      mark.loading = 'eager';
+      logo.prepend(mark);
+    });
+  };
+
+  applyBrandSymbol();
+
   const year = document.querySelector('[data-year]');
   if (year) year.textContent = new Date().getFullYear();
 
