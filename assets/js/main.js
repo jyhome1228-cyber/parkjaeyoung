@@ -1,5 +1,5 @@
 (() => {
-  const INJU_SYMBOL_URL = 'https://cdn.imweb.me/upload/S2025061194bb8d274d3cd/496a9732268cb.png';
+  const INJU_SYMBOL_URL = 'https://cdn.imweb.me/upload/S20251008dcc1c9d70e3ac/13ec1af742c93.png';
 
   const ensureStylesheet = (href) => {
     const base = href.split('?')[0];
