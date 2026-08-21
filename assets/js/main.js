@@ -93,7 +93,7 @@
     hero.innerHTML = `
       <div class="shell resume-profile">
         <div class="resume-profile__visual">
-          <img class="resume-media-hero__image" src="https://cdn.imweb.me/upload/S2025061194bb8d274d3cd/3e7adf87e008e.png" alt="박재영 프로필 이미지" loading="eager">
+          <img class="resume-media-hero__image" src="https://cdn.imweb.me/upload/S20260219b829e728b3f2e/37d5a25f8cd44.png" alt="박재영 프로필 이미지" loading="eager">
         </div>
         <div class="resume-profile__copy">
           <p class="eyebrow">PROFILE</p>
@@ -150,7 +150,6 @@
         <button class="mobile-menu-close" type="button" aria-label="메뉴 닫기"></button>
       </div>
       <nav class="mobile-menu-overlay__nav" aria-label="모바일 메뉴">
-        <a data-mobile-nav href="index.html">홈</a>
         ${items.map(([href, label]) => `<a data-mobile-nav href="${href}">${label}</a>`).join('')}
       </nav>
       <div class="mobile-menu-overlay__foot"><span>PARK JAEYOUNG</span><span>Personal Archive</span></div>
