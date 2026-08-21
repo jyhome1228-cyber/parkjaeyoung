@@ -7,7 +7,7 @@
   <meta name="description" content="박재영과 나인웍스가 프로젝트, 디자인, 브랜딩, 심사와 자문을 통해 함께한 기업·브랜드·기관을 소개합니다.">
   <link rel="stylesheet" href="assets/css/site.css">
   <link rel="stylesheet" href="assets/css/identity-v2.css?v=20260820-3">
-  <link rel="stylesheet" href="assets/css/partners-capabilities.css?v=20260821-1">
+  <link rel="stylesheet" href="assets/css/partners-capabilities.css?v=20260821-2">
 </head>
 <body class="partners-page">
 <header class="site-header" data-header><div class="site-header__inner shell"><a class="site-logo" href="index.html"><b>朴宰瑩</b><span>PARK JAEYOUNG</span></a><nav class="site-nav" aria-label="주요 메뉴"></nav></div></header>
@@ -72,5 +72,17 @@
 </main>
 <footer class="footer"><div class="footer__inner shell"><div class="footer__brand"><b>朴宰瑩</b><span>PARK JAEYOUNG</span></div><p class="footer__center">COMPANIES · BRANDS · INSTITUTIONS</p><p class="footer__right">© <span data-year></span> PARK JAEYOUNG</p></div></footer>
 <script src="assets/js/main.js"></script>
+<script>
+(() => {
+  const grid = document.querySelector('.partner-logo-grid');
+  if (!grid) return;
+  const cards = Array.from(grid.children);
+  for (let i = cards.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cards[i], cards[j]] = [cards[j], cards[i]];
+  }
+  cards.forEach((card) => grid.appendChild(card));
+})();
+</script>
 </body>
 </html>
