@@ -7,6 +7,22 @@
 .capabilities-page .hex-section__copy{
   align-self:center;
 }
+.capabilities-page .hex-section__copy .section-heading__label{
+  margin-bottom:18px;
+}
+.capabilities-page .hex-section__copy h2{
+  max-width:560px;
+  font-size:clamp(24px,1.85vw,30px);
+  line-height:1.36;
+  font-weight:510;
+  letter-spacing:-.038em;
+}
+.capabilities-page .hex-section__copy > p:last-of-type{
+  max-width:540px;
+  margin-top:20px;
+  font-size:16px;
+  line-height:1.78;
+}
 .capability-summary-note{
   margin-top:32px;
   padding-top:20px;
@@ -53,7 +69,7 @@
 }
 .capability-summary-card h3{
   margin:0;
-  font-size:24px;
+  font-size:22px;
   line-height:1.25;
   font-weight:560;
   letter-spacing:-.035em;
@@ -71,8 +87,8 @@
   min-height:70vh;
 }
 .partners-intro{
-  padding-top:clamp(86px,8vw,126px);
-  padding-bottom:clamp(52px,5vw,78px);
+  padding-top:clamp(76px,6.5vw,96px);
+  padding-bottom:clamp(42px,4vw,58px);
 }
 .partners-intro__grid{
   display:grid;
@@ -85,16 +101,16 @@
 }
 .partners-intro h1{
   margin:0;
-  font-size:clamp(44px,5.4vw,78px);
-  line-height:1.06;
-  font-weight:520;
-  letter-spacing:-.055em;
+  font-size:var(--fs-h2);
+  line-height:1.3;
+  font-weight:510;
+  letter-spacing:-.038em;
 }
 .partners-intro__copy{
   margin:0;
   max-width:520px;
   font-size:16px;
-  line-height:1.8;
+  line-height:1.78;
   color:var(--muted);
   word-break:keep-all;
 }
@@ -141,11 +157,17 @@
   }
   .partners-intro__grid{
     grid-template-columns:1fr;
-    gap:28px;
+    gap:24px;
   }
 }
 
 @media(max-width:760px){
+  .capabilities-page .hex-section__copy h2{
+    font-size:clamp(24px,7vw,29px);
+  }
+  .capabilities-page .hex-section__copy > p:last-of-type{
+    font-size:15px;
+  }
   .capability-summary-grid{
     grid-template-columns:repeat(2,minmax(0,1fr));
   }
@@ -154,7 +176,7 @@
     padding:20px 18px;
   }
   .capability-summary-card h3{
-    font-size:21px;
+    font-size:20px;
   }
   .capability-summary-note{
     align-items:flex-start;
@@ -173,11 +195,11 @@
     max-height:54px;
   }
   .partners-intro{
-    padding-top:72px;
-    padding-bottom:42px;
+    padding-top:64px;
+    padding-bottom:36px;
   }
   .partners-intro h1{
-    font-size:clamp(38px,11vw,52px);
+    font-size:clamp(24px,7.5vw,30px);
   }
   .partners-intro__copy{
     font-size:15px;
