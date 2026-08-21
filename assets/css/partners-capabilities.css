@@ -1,0 +1,197 @@
+/* Capabilities + Partners refinement — 2026-08-21 */
+
+/* Capabilities: replace the hexagonal map with a simple 3 x 2 matrix. */
+.capabilities-page .hex-section{
+  align-items:center;
+}
+.capabilities-page .hex-section__copy{
+  align-self:center;
+}
+.capability-summary-note{
+  margin-top:32px;
+  padding-top:20px;
+  border-top:1px solid var(--ink);
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:24px;
+}
+.capability-summary-note strong{
+  font-size:18px;
+  font-weight:560;
+  letter-spacing:-.03em;
+}
+.capability-summary-note span{
+  font-size:12px;
+  color:var(--muted);
+  letter-spacing:.02em;
+}
+.capability-summary-grid{
+  width:100%;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  border-top:1px solid var(--ink);
+  border-left:1px solid var(--line);
+}
+.capability-summary-card{
+  min-height:180px;
+  padding:24px 24px 22px;
+  border-right:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  background:#fff;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.capability-summary-card__no{
+  font-size:11px;
+  color:var(--muted);
+  letter-spacing:.08em;
+}
+.capability-summary-card__copy{
+  margin-top:auto;
+}
+.capability-summary-card h3{
+  margin:0;
+  font-size:24px;
+  line-height:1.25;
+  font-weight:560;
+  letter-spacing:-.035em;
+}
+.capability-summary-card p{
+  margin:7px 0 0;
+  font-size:11px;
+  line-height:1.4;
+  color:#92928e;
+  letter-spacing:.035em;
+}
+
+/* Partners */
+.partners-page main{
+  min-height:70vh;
+}
+.partners-intro{
+  padding-top:clamp(86px,8vw,126px);
+  padding-bottom:clamp(52px,5vw,78px);
+}
+.partners-intro__grid{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(340px,.55fr);
+  gap:72px;
+  align-items:end;
+}
+.partners-intro .eyebrow{
+  margin-bottom:18px;
+}
+.partners-intro h1{
+  margin:0;
+  font-size:clamp(44px,5.4vw,78px);
+  line-height:1.06;
+  font-weight:520;
+  letter-spacing:-.055em;
+}
+.partners-intro__copy{
+  margin:0;
+  max-width:520px;
+  font-size:16px;
+  line-height:1.8;
+  color:var(--muted);
+  word-break:keep-all;
+}
+.partners-logo-section{
+  padding-top:0;
+  border-top:0;
+}
+.partner-logo-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  border-top:1px solid var(--ink);
+  border-left:1px solid var(--line);
+}
+.partner-logo-card{
+  min-width:0;
+  min-height:156px;
+  padding:28px;
+  border-right:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.partner-logo-card img{
+  display:block;
+  width:auto;
+  height:auto;
+  max-width:86%;
+  max-height:72px;
+  object-fit:contain;
+  mix-blend-mode:multiply;
+}
+
+@media(max-width:1100px){
+  .capability-summary-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+  .capability-summary-card{
+    min-height:160px;
+  }
+  .partner-logo-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+  .partners-intro__grid{
+    grid-template-columns:1fr;
+    gap:28px;
+  }
+}
+
+@media(max-width:760px){
+  .capability-summary-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .capability-summary-card{
+    min-height:142px;
+    padding:20px 18px;
+  }
+  .capability-summary-card h3{
+    font-size:21px;
+  }
+  .capability-summary-note{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:7px;
+  }
+  .partner-logo-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .partner-logo-card{
+    min-height:118px;
+    padding:20px 16px;
+  }
+  .partner-logo-card img{
+    max-width:88%;
+    max-height:54px;
+  }
+  .partners-intro{
+    padding-top:72px;
+    padding-bottom:42px;
+  }
+  .partners-intro h1{
+    font-size:clamp(38px,11vw,52px);
+  }
+  .partners-intro__copy{
+    font-size:15px;
+  }
+}
+
+@media(max-width:460px){
+  .capability-summary-grid{
+    grid-template-columns:1fr;
+  }
+  .capability-summary-card{
+    min-height:118px;
+  }
+  .partner-logo-card{
+    min-height:106px;
+  }
+}
