@@ -56,11 +56,14 @@
     if (href.includes('collaborate.html')) action.remove();
   });
 
-  const items = [
+  const introItems = [
     ['career.html', '걸어온 길'],
     ['resume.html', '이력'],
     ['business.html', '사업체'],
-    ['capabilities.html', '잘하는 일'],
+    ['capabilities.html', '잘하는 일']
+  ];
+
+  const items = [
     ['research.html', '연구'],
     ['projects.html', '포트폴리오'],
     ['partners.html', '함께한 기업'],
@@ -69,8 +72,36 @@
 
   const nav = document.querySelector('.site-nav');
   if (nav) {
-    nav.innerHTML = items.map(([href, label]) => `<a data-nav href="${href}">${label}</a>`).join('');
+    const introLinks = introItems.map(([href, label]) => `<a data-nav href="${href}">${label}</a>`).join('');
+    nav.innerHTML = `
+      <div class="site-nav__group" data-nav-group>
+        <button class="site-nav__trigger" type="button" aria-expanded="false" aria-haspopup="true">소개 <span aria-hidden="true">⌄</span></button>
+        <div class="site-nav__dropdown" role="menu">
+          ${introLinks}
+        </div>
+      </div>
+      ${items.map(([href, label]) => `<a data-nav href="${href}">${label}</a>`).join('')}
+    `;
     nav.setAttribute('aria-label', '박재영 개인사이트 메뉴');
+
+    const group = nav.querySelector('[data-nav-group]');
+    const trigger = group?.querySelector('.site-nav__trigger');
+    const setOpen = (open) => {
+      group?.classList.toggle('is-open', open);
+      trigger?.setAttribute('aria-expanded', String(open));
+    };
+    trigger?.addEventListener('click', (event) => {
+      event.stopPropagation();
+      setOpen(!group?.classList.contains('is-open'));
+    });
+    group?.addEventListener('mouseenter', () => setOpen(true));
+    group?.addEventListener('mouseleave', () => setOpen(false));
+    document.addEventListener('click', (event) => {
+      if (group && !group.contains(event.target)) setOpen(false);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setOpen(false);
+    });
   }
 
   const path = window.location.pathname.split('/').pop() || 'index.html';
@@ -150,7 +181,13 @@
         <button class="mobile-menu-close" type="button" aria-label="메뉴 닫기"></button>
       </div>
       <nav class="mobile-menu-overlay__nav" aria-label="모바일 메뉴">
-        ${items.map(([href, label]) => `<a data-mobile-nav href="${href}">${label}</a>`).join('')}
+        <div class="mobile-menu-section">
+          <span class="mobile-menu-section__label">소개</span>
+          ${introItems.map(([href, label]) => `<a data-mobile-nav href="${href}">${label}</a>`).join('')}
+        </div>
+        <div class="mobile-menu-section mobile-menu-section--main">
+          ${items.map(([href, label]) => `<a data-mobile-nav href="${href}">${label}</a>`).join('')}
+        </div>
       </nav>
       <div class="mobile-menu-overlay__foot"><span>PARK JAEYOUNG</span><span>Personal Archive</span></div>
     `;
@@ -190,6 +227,10 @@
       link.setAttribute('aria-current', 'page');
     }
   });
+
+  if (introItems.some(([href]) => href === path)) {
+    document.querySelector('.site-nav__trigger')?.classList.add('is-current');
+  }
 
   if (path === 'index.html') {
     document.querySelector('.home-hero__top > .eyebrow')?.remove();
