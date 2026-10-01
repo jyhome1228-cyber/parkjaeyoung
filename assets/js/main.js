@@ -14,7 +14,7 @@
     document.head.appendChild(link);
   };
   ensureStylesheet('assets/css/korean-first.css?v=20260820-2');
-  ensureStylesheet('assets/css/global-ui.css?v=20261001-1');
+  ensureStylesheet('assets/css/global-ui.css?v=20261001-2');
 
   const applyBrandSymbol = () => {
     document.querySelectorAll('link[rel~="icon"], link[rel="apple-touch-icon"]').forEach((link) => link.remove());
