@@ -64,6 +64,7 @@
   ];
 
   const items = [
+    ['current.html', '현재 하고 있는 일'],
     ['research.html', '연구'],
     ['projects.html', '포트폴리오'],
     ['partners.html', '함께한 기업'],
