@@ -239,6 +239,32 @@
     document.querySelector('.footer__center')?.remove();
   }
 
+  const applySentenceBreaks = () => {
+    const targets = document.querySelectorAll(
+      'main p:not(.eyebrow):not(.home-hero__meta):not(.business-card__meta):not(.current-work-card__meta):not(.project-card__meta)'
+    );
+
+    targets.forEach((element) => {
+      if (element.dataset.sentenceBreaks === 'true') return;
+      if (element.querySelector('br')) return;
+      if (element.children.length > 0) return;
+
+      const text = element.textContent.trim();
+      if (!/[.!?]\s+/.test(text)) return;
+
+      const parts = text.split(/(?<=[.!?])\s+/).filter(Boolean);
+      if (parts.length < 2) return;
+
+      element.textContent = '';
+      parts.forEach((part, index) => {
+        element.append(document.createTextNode(part));
+        if (index < parts.length - 1) element.append(document.createElement('br'));
+      });
+      element.dataset.sentenceBreaks = 'true';
+    });
+  };
+  applySentenceBreaks();
+
   const hasHangul = (value = '') => /[가-힣]/.test(value);
   const splitBilingual = (value = '') => {
     const text = value.replace(/\s+/g, ' ').trim();
