@@ -269,7 +269,7 @@
   });
 
   const hashView = location.hash.replace('#', '');
-  if (['dashboard','current','business','portfolio','research','profile'].includes(hashView)) switchView(hashView);
+  if (['dashboard','inquiries','current','business','portfolio','research','profile'].includes(hashView)) switchView(hashView);
 
   loadPublicData().catch(error => {
     console.error(error);
