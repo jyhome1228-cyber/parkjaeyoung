@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow,noarchive">
   <title>ADMIN · PARK JAEYOUNG</title>
-  <link rel="stylesheet" href="assets/css/admin.css?v=20261102-1">
+  <link rel="stylesheet" href="assets/css/admin.css?v=20261102-2">
 </head>
 <body class="admin-body">
   <div class="admin-app">
@@ -19,20 +19,23 @@
         <button class="admin-nav__item is-active" type="button" data-view="dashboard">
           <span>대시보드</span><em>01</em>
         </button>
+        <button class="admin-nav__item" type="button" data-view="inquiries">
+          <span>문의함</span><em>02</em>
+        </button>
         <button class="admin-nav__item" type="button" data-view="current">
-          <span>현재 하고 있는 일</span><em>02</em>
+          <span>현재 하고 있는 일</span><em>03</em>
         </button>
         <button class="admin-nav__item" type="button" data-view="business">
-          <span>사업체</span><em>03</em>
+          <span>사업체</span><em>04</em>
         </button>
         <button class="admin-nav__item" type="button" data-view="portfolio">
-          <span>포트폴리오</span><em>04</em>
+          <span>포트폴리오</span><em>05</em>
         </button>
         <button class="admin-nav__item" type="button" data-view="research">
-          <span>연구</span><em>05</em>
+          <span>연구</span><em>06</em>
         </button>
         <button class="admin-nav__item" type="button" data-view="profile">
-          <span>프로필 · 기본정보</span><em>06</em>
+          <span>프로필 · 기본정보</span><em>07</em>
         </button>
       </nav>
 
@@ -68,6 +71,11 @@
             <p>운영·기획 중 사업체</p>
           </article>
           <article class="admin-summary-card">
+            <span>INQUIRIES</span>
+            <strong>메일</strong>
+            <p>컨설팅·프로젝트 문의</p>
+          </article>
+          <article class="admin-summary-card">
             <span>PORTFOLIO</span>
             <strong>준비중</strong>
             <p>프로젝트 아카이브</p>
@@ -87,6 +95,7 @@
             </div>
           </div>
           <div class="admin-quick-grid">
+            <button type="button" data-jump="inquiries"><b>문의함</b><span>컨설팅·프로젝트 문의 확인</span></button>
             <button type="button" data-jump="current"><b>현재 하고 있는 일</b><span>진행 프로젝트 추가·수정</span></button>
             <button type="button" data-jump="business"><b>사업체</b><span>사업 내용·상태 수정</span></button>
             <button type="button" data-jump="portfolio"><b>포트폴리오</b><span>프로젝트 공개 준비</span></button>
@@ -101,6 +110,19 @@
           </div>
           <p>현재 페이지는 공개 사이트의 데이터를 읽어와 브라우저 안에서 수정하고 임시저장할 수 있습니다. 실제 사이트 파일을 변경하는 게시 기능은 인증된 관리 API를 연결한 뒤 활성화됩니다.</p>
         </section>
+      </section>
+
+      <section class="admin-view" data-panel="inquiries">
+        <div class="admin-coming">
+          <span>CONTACT / INQUIRIES</span>
+          <h2>문의함</h2>
+          <p>현재 문의 폼은 <b>info@9works.kr</b>로 정리된 이메일을 보내는 방식입니다. 실제 DB 접수 기능을 연결하면 이 화면에서 신규 문의, 답변 상태, 상담 진행 여부를 바로 관리할 수 있습니다.</p>
+          <div class="admin-coming__tags"><b>컨설팅</b><b>브랜딩</b><b>웹·개발</b><b>강의·연구</b><b>기타 협업</b></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:24px">
+            <a class="admin-button" href="mailto:info@9works.kr">문의 메일 열기 ↗</a>
+            <a class="admin-button admin-button--ghost" href="contact.html" target="_blank" rel="noopener">문의 페이지 보기 ↗</a>
+          </div>
+        </div>
       </section>
 
       <section class="admin-view" data-panel="current">
@@ -169,6 +191,6 @@
   </div>
 
   <div class="admin-toast" data-toast role="status" aria-live="polite"></div>
-  <script src="assets/js/admin.js?v=20261102-1"></script>
+  <script src="assets/js/admin.js?v=20261102-2"></script>
 </body>
 </html>
