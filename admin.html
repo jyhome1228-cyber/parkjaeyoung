@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>ADMIN · PARK JAEYOUNG</title>
+  <link rel="stylesheet" href="assets/css/admin.css?v=20261102-1">
+</head>
+<body class="admin-body">
+  <div class="admin-app">
+    <aside class="admin-sidebar">
+      <a class="admin-brand" href="admin.html">
+        <strong>朴宰瑩</strong>
+        <span>ADMIN</span>
+      </a>
+
+      <nav class="admin-nav" aria-label="관리 메뉴">
+        <button class="admin-nav__item is-active" type="button" data-view="dashboard">
+          <span>대시보드</span><em>01</em>
+        </button>
+        <button class="admin-nav__item" type="button" data-view="current">
+          <span>현재 하고 있는 일</span><em>02</em>
+        </button>
+        <button class="admin-nav__item" type="button" data-view="business">
+          <span>사업체</span><em>03</em>
+        </button>
+        <button class="admin-nav__item" type="button" data-view="portfolio">
+          <span>포트폴리오</span><em>04</em>
+        </button>
+        <button class="admin-nav__item" type="button" data-view="research">
+          <span>연구</span><em>05</em>
+        </button>
+        <button class="admin-nav__item" type="button" data-view="profile">
+          <span>프로필 · 기본정보</span><em>06</em>
+        </button>
+      </nav>
+
+      <div class="admin-sidebar__foot">
+        <a href="index.html" target="_blank" rel="noopener">사이트 보기 ↗</a>
+        <span>parkjaeyoung.me</span>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <div>
+          <p class="admin-kicker">PARK JAEYOUNG / SITE MANAGER</p>
+          <h1 data-page-title>대시보드</h1>
+        </div>
+        <div class="admin-topbar__actions">
+          <span class="admin-status"><i></i>로컬 초안 모드</span>
+          <button class="admin-button admin-button--ghost" type="button" data-export>JSON 내보내기</button>
+          <button class="admin-button" type="button" disabled title="관리 API 연결 후 활성화">게시하기</button>
+        </div>
+      </header>
+
+      <section class="admin-view is-active" data-panel="dashboard">
+        <div class="admin-summary-grid">
+          <article class="admin-summary-card">
+            <span>CURRENT WORK</span>
+            <strong data-count-current>—</strong>
+            <p>현재 하고 있는 일</p>
+          </article>
+          <article class="admin-summary-card">
+            <span>BUSINESS</span>
+            <strong data-count-business>—</strong>
+            <p>운영·기획 중 사업체</p>
+          </article>
+          <article class="admin-summary-card">
+            <span>PORTFOLIO</span>
+            <strong>준비중</strong>
+            <p>프로젝트 아카이브</p>
+          </article>
+          <article class="admin-summary-card">
+            <span>RESEARCH</span>
+            <strong data-count-research>—</strong>
+            <p>논문·연구 기록</p>
+          </article>
+        </div>
+
+        <section class="admin-block">
+          <div class="admin-block__head">
+            <div>
+              <span>QUICK ACCESS</span>
+              <h2>자주 수정하는 영역</h2>
+            </div>
+          </div>
+          <div class="admin-quick-grid">
+            <button type="button" data-jump="current"><b>현재 하고 있는 일</b><span>진행 프로젝트 추가·수정</span></button>
+            <button type="button" data-jump="business"><b>사업체</b><span>사업 내용·상태 수정</span></button>
+            <button type="button" data-jump="portfolio"><b>포트폴리오</b><span>프로젝트 공개 준비</span></button>
+            <button type="button" data-jump="research"><b>연구</b><span>논문·연구 기록 관리</span></button>
+          </div>
+        </section>
+
+        <section class="admin-block admin-note">
+          <div>
+            <span>ADMIN STATUS</span>
+            <h2>1차 관리화면 준비 완료</h2>
+          </div>
+          <p>현재 페이지는 공개 사이트의 데이터를 읽어와 브라우저 안에서 수정하고 임시저장할 수 있습니다. 실제 사이트 파일을 변경하는 게시 기능은 인증된 관리 API를 연결한 뒤 활성화됩니다.</p>
+        </section>
+      </section>
+
+      <section class="admin-view" data-panel="current">
+        <div class="admin-workspace">
+          <div class="admin-list-pane">
+            <div class="admin-pane-head">
+              <div><span>CURRENT WORK</span><h2>현재 하고 있는 일</h2></div>
+              <button class="admin-icon-button" type="button" data-add="current" aria-label="항목 추가">＋</button>
+            </div>
+            <div class="admin-item-list" data-list-current></div>
+          </div>
+          <div class="admin-editor-pane" data-editor-current>
+            <div class="admin-empty-state">
+              <span>SELECT ITEM</span>
+              <p>왼쪽에서 수정할 항목을 선택하세요.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="admin-view" data-panel="business">
+        <div class="admin-workspace">
+          <div class="admin-list-pane">
+            <div class="admin-pane-head">
+              <div><span>BUSINESS</span><h2>사업체</h2></div>
+              <button class="admin-icon-button" type="button" data-add="business" aria-label="항목 추가">＋</button>
+            </div>
+            <div class="admin-item-list" data-list-business></div>
+          </div>
+          <div class="admin-editor-pane" data-editor-business>
+            <div class="admin-empty-state">
+              <span>SELECT ITEM</span>
+              <p>왼쪽에서 수정할 사업체를 선택하세요.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="admin-view" data-panel="portfolio">
+        <div class="admin-coming">
+          <span>PORTFOLIO MANAGER</span>
+          <h2>포트폴리오 관리</h2>
+          <p>프로젝트 썸네일, 카테고리, 설명, 링크, 공개 여부를 관리하는 영역으로 연결할 예정입니다.</p>
+          <div class="admin-coming__tags"><b>썸네일</b><b>카테고리</b><b>공개상태</b><b>정렬</b></div>
+        </div>
+      </section>
+
+      <section class="admin-view" data-panel="research">
+        <div class="admin-coming">
+          <span>RESEARCH MANAGER</span>
+          <h2>연구 기록 관리</h2>
+          <p>연구 주제, 논문, 학회·발표, 박사과정 기록을 한곳에서 추가하고 정렬할 수 있도록 확장할 예정입니다.</p>
+          <div class="admin-coming__tags"><b>연구주제</b><b>논문</b><b>발표</b><b>연도</b></div>
+        </div>
+      </section>
+
+      <section class="admin-view" data-panel="profile">
+        <div class="admin-coming">
+          <span>SITE SETTINGS</span>
+          <h2>프로필 · 기본정보</h2>
+          <p>메인 소개문구, 프로필, 메뉴 노출 여부, 연락처와 SEO 정보를 관리하는 설정 영역입니다.</p>
+          <div class="admin-coming__tags"><b>소개</b><b>프로필</b><b>메뉴</b><b>SEO</b></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="admin-toast" data-toast role="status" aria-live="polite"></div>
+  <script src="assets/js/admin.js?v=20261102-1"></script>
+</body>
+</html>
