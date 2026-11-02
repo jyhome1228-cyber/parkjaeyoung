@@ -14,7 +14,7 @@
     document.head.appendChild(link);
   };
   ensureStylesheet('assets/css/korean-first.css?v=20260820-2');
-  ensureStylesheet('assets/css/global-ui.css?v=20261001-2');
+  ensureStylesheet('assets/css/global-ui.css?v=20261102-3');
 
   const applyBrandSymbol = () => {
     document.querySelectorAll('link[rel~="icon"], link[rel="apple-touch-icon"]').forEach((link) => link.remove());
@@ -69,7 +69,7 @@
     ['projects.html', '포트폴리오'],
     ['partners.html', '함께한 기업'],
     ['collaborate.html', '함께하는 방법'],
-    ['contact.html', 'Contact Us']
+    ['contact.html', '문의하기']
   ];
 
   const nav = document.querySelector('.site-nav');
