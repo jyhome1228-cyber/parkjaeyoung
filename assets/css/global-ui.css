@@ -533,3 +533,43 @@ main > .page-hero + .resume-section{
   .current-work-card{min-height:250px;padding:24px 20px}
   .current-work-card h2{margin-top:36px}
 }
+
+
+/* Korean typography & natural line breaking — 2026-11-02 */
+body{
+  line-break:strict;
+  overflow-wrap:normal;
+  word-break:keep-all;
+}
+h1,h2,h3,h4,
+.page-hero h1,
+.section-heading h2,
+.split__body h2,
+.home-story__body h2,
+.career-closing__inner h2,
+.current-work-intro h1,
+.contact-hero h1,
+.contact-form-head h2{
+  word-break:keep-all;
+  line-break:strict;
+  text-wrap:balance;
+}
+p,
+li,
+dd,
+.archive-item p,
+.business-card p,
+.current-work-card p,
+.story-chapter__text p,
+.page-hero__desc,
+.section-heading__desc,
+.resume-profile__intro,
+.contact-hero__copy p,
+.contact-guide__list p{
+  word-break:keep-all;
+  line-break:strict;
+  text-wrap:pretty;
+}
+@supports (hanging-punctuation:first){
+  p{hanging-punctuation:first last}
+}
