@@ -26,8 +26,29 @@
   <link rel="stylesheet" href="assets/css/site.css">
   <link rel="stylesheet" href="assets/css/identity-v2.css?v=20260822-home1">
   <link rel="stylesheet" href="assets/css/home-story.css?v=20260822-1">
+<style>
+  .pj-splash{position:fixed;inset:0;z-index:99999;background:#fff;color:#111;display:grid;place-items:center;overflow:hidden;transition:opacity .75s cubic-bezier(.22,1,.36,1),visibility .75s}
+  .pj-splash.is-gone{opacity:0;visibility:hidden;pointer-events:none}
+  .pj-splash__message{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:24px;text-align:center;opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .75s cubic-bezier(.22,1,.36,1);font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif}
+  .pj-splash__message.is-active{opacity:1;transform:translateY(0)}
+  .pj-splash__message p{font-size:clamp(24px,3.1vw,46px);line-height:1.5;letter-spacing:-.055em;font-weight:500;margin:0}
+  .pj-splash__wordmark{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);font-family:Pretendard,-apple-system,BlinkMacSystemFont,sans-serif;font-size:clamp(20px,2.7vw,36px);letter-spacing:-.045em;font-weight:600;white-space:nowrap;opacity:0;transition:opacity .45s ease}
+  .pj-splash__wordmark.is-visible{opacity:1}
+  .pj-splash__wordmark.is-moving{transition:left 1s cubic-bezier(.65,0,.2,1),top 1s cubic-bezier(.65,0,.2,1),font-size 1s cubic-bezier(.65,0,.2,1),transform 1s cubic-bezier(.65,0,.2,1),opacity .45s ease}
+  .pj-splash__skip{position:absolute;bottom:28px;right:32px;border:0;background:transparent;color:#777;font-size:12px;cursor:pointer;padding:10px}
+  @media(max-width:640px){.pj-splash__message p{font-size:clamp(23px,6vw,30px)}.pj-splash__skip{right:16px;bottom:16px}}
+  @media(prefers-reduced-motion:reduce){.pj-splash *{transition:none!important}}
+</style>
 </head>
 <body class="home-page">
+<div class="pj-splash" id="pj-splash" aria-label="사이트 소개">
+  <div class="pj-splash__message" data-splash-scene><p>안녕하세요.</p><p>저는 박재영이라고 합니다.</p></div>
+  <div class="pj-splash__message" data-splash-scene><p>디자인을 하고,</p><p>새로운 가능성을 연구합니다.</p></div>
+  <div class="pj-splash__message" data-splash-scene><p>생각을 현실로 만드는</p><p>일을 좋아합니다.</p></div>
+  <div class="pj-splash__message" data-splash-scene><p>이제,</p><p>저의 이야기를 소개합니다.</p></div>
+  <div class="pj-splash__wordmark" id="pj-splash-wordmark">PARK JAEYOUNG</div>
+  <button class="pj-splash__skip" id="pj-splash-skip" type="button">건너뛰기</button>
+</div>
 <header class="site-header" data-header>
   <div class="site-header__inner shell">
     <a class="site-logo" href="index.html"><b>朴宰瑩</b><span>PARK JAEYOUNG</span></a>
@@ -121,5 +142,45 @@
 </main>
 <footer class="footer"><div class="footer__inner shell"><div class="footer__brand"><b>朴宰瑩</b><span>PARK JAEYOUNG</span></div><p class="footer__center"></p><p class="footer__right">© <span data-year></span> PARK JAEYOUNG</p></div></footer>
 <script src="assets/js/main.js"></script>
+<script>
+(function(){
+  const splash=document.getElementById('pj-splash');
+  const scenes=[...splash.querySelectorAll('[data-splash-scene]')];
+  const word=splash.querySelector('#pj-splash-wordmark');
+  const timers=[];
+  let finished=false;
+  const later=(fn,ms)=>timers.push(setTimeout(fn,ms));
+  function finish(){
+    if(finished)return;finished=true;
+    timers.forEach(clearTimeout);
+    splash.classList.add('is-gone');
+    document.body.style.overflow='';
+    try{sessionStorage.setItem('pj-splash-seen','1')}catch(e){}
+    setTimeout(()=>splash.remove(),850);
+  }
+  splash.querySelector('#pj-splash-skip').addEventListener('click',finish);
+  try{if(sessionStorage.getItem('pj-splash-seen')){splash.remove();return}}catch(e){}
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){finish();return}
+  document.body.style.overflow='hidden';
+  const starts=[150,1750,3350,4950];
+  scenes.forEach((el,i)=>{
+    later(()=>el.classList.add('is-active'),starts[i]);
+    later(()=>el.classList.remove('is-active'),starts[i]+1220);
+  });
+  later(()=>word.classList.add('is-visible'),6600);
+  later(()=>{
+    const target=document.querySelector('.site-logo');
+    if(!target){finish();return}
+    const rect=target.getBoundingClientRect();
+    const wrect=word.getBoundingClientRect();
+    word.style.left=(rect.left+Math.min(rect.width,wrect.width)/2)+'px';
+    word.style.top=(rect.top+rect.height/2)+'px';
+    word.style.fontSize='13px';
+    word.style.transform='translate(-50%,-50%)';
+    word.classList.add('is-moving');
+  },7300);
+  later(finish,8350);
+})();
+</script>
 </body>
 </html>
