@@ -30,6 +30,7 @@
     document.head.appendChild(apple);
 
     document.querySelectorAll('.site-logo').forEach((logo) => {
+      if (document.body.classList.contains('home-page')) { logo.querySelectorAll('.site-logo__mark').forEach(mark => mark.remove()); return; }
       if (logo.querySelector('.site-logo__mark')) return;
       const mark = document.createElement('img');
       mark.className = 'site-logo__mark';
