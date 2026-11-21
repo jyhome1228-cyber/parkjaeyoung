@@ -38,7 +38,10 @@
   .pj-splash__skip{position:absolute;bottom:28px;right:32px;border:0;background:transparent;color:#777;font-size:12px;cursor:pointer;padding:10px}
   @media(max-width:640px){.pj-splash__message p{font-size:clamp(23px,6vw,30px)}.pj-splash__skip{right:16px;bottom:16px}}
   @media(prefers-reduced-motion:reduce){.pj-splash *{transition:none!important}}
-</style>
+.home-page .site-header .site-logo{display:inline-flex;align-items:center;gap:0;text-decoration:none;white-space:nowrap}
+  .home-page .site-header .site-logo b{font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif;font-size:15px;font-weight:600;letter-spacing:-.045em;line-height:1.2;color:#111}
+  @media(max-width:640px){.home-page .site-header .site-logo b{font-size:14px}}
+  </style>
 </head>
 <body class="home-page">
 <div class="pj-splash" id="pj-splash" aria-label="사이트 소개">
@@ -51,7 +54,7 @@
 </div>
 <header class="site-header" data-header>
   <div class="site-header__inner shell">
-    <a class="site-logo" href="index.html"><b>朴宰瑩</b><span>PARK JAEYOUNG</span></a>
+    <a class="site-logo" href="index.html" aria-label="PARK JAEYOUNG 홈"><b>PARK JAEYOUNG</b></a>
     <nav class="site-nav" aria-label="주요 메뉴"></nav>
   </div>
 </header>
@@ -148,11 +151,14 @@
   const scenes=[...splash.querySelectorAll('[data-splash-scene]')];
   const word=splash.querySelector('#pj-splash-wordmark');
   const timers=[];
+  const headerLogo=document.querySelector(".site-header .site-logo");
+  if(headerLogo)headerLogo.style.visibility="hidden";
   let finished=false;
   const later=(fn,ms)=>timers.push(setTimeout(fn,ms));
   function finish(){
     if(finished)return;finished=true;
     timers.forEach(clearTimeout);
+    if(headerLogo)headerLogo.style.visibility='visible';
     splash.classList.add('is-gone');
     document.body.style.overflow='';
     setTimeout(()=>splash.remove(),850);
@@ -167,15 +173,17 @@
   });
   later(()=>word.classList.add('is-visible'),6600);
   later(()=>{
-    const target=document.querySelector('.site-logo');
+    const target=headerLogo?.querySelector('b');
     if(!target){finish();return}
     const rect=target.getBoundingClientRect();
-    const wrect=word.getBoundingClientRect();
-    word.style.left=(rect.left+Math.min(rect.width,wrect.width)/2)+'px';
-    word.style.top=(rect.top+rect.height/2)+'px';
-    word.style.fontSize='13px';
-    word.style.transform='translate(-50%,-50%)';
+    const computed=getComputedStyle(target);
+    const size=parseFloat(computed.fontSize)||15;
     word.classList.add('is-moving');
+    word.style.left=(rect.left+rect.width/2)+'px';
+    word.style.top=(rect.top+rect.height/2)+'px';
+    word.style.fontSize=size+'px';
+    word.style.fontWeight=computed.fontWeight;
+    word.style.letterSpacing=computed.letterSpacing;
   },7300);
   later(finish,8350);
 })();
